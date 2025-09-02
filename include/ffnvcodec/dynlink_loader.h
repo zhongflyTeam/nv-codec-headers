@@ -149,6 +149,8 @@ typedef struct CudaFunctions {
     tcuDeviceGetPCIBusId *cuDeviceGetPCIBusId;
     tcuDeviceComputeCapability *cuDeviceComputeCapability;
     tcuCtxCreate_v2 *cuCtxCreate;
+    tcuCtxSynchronize *cuCtxSynchronize;
+    tcuCtxGetStreamPriorityRange *cuCtxGetStreamPriorityRange;
     tcuCtxGetCurrent *cuCtxGetCurrent;
     tcuCtxSetLimit *cuCtxSetLimit;
     tcuCtxPushCurrent_v2 *cuCtxPushCurrent;
@@ -159,6 +161,10 @@ typedef struct CudaFunctions {
     tcuMemAllocManaged *cuMemAllocManaged;
     tcuMemsetD8Async *cuMemsetD8Async;
     tcuMemFree_v2 *cuMemFree;
+    tcuMemHostAlloc *cuMemHostAlloc;
+    tcuMemFreeHost *cuMemFreeHost;
+    tcuMemAllocAsync *cuMemAllocAsync;
+    tcuMemFreeAsync *cuMemFreeAsync;
     tcuMemcpy *cuMemcpy;
     tcuMemcpyAsync *cuMemcpyAsync;
     tcuMemcpy2D_v2 *cuMemcpy2D;
@@ -180,6 +186,7 @@ typedef struct CudaFunctions {
     tcuDevicePrimaryCtxReset *cuDevicePrimaryCtxReset;
 
     tcuStreamCreate *cuStreamCreate;
+    tcuStreamCreateWithPriority *cuStreamCreateWithPriority;
     tcuStreamQuery *cuStreamQuery;
     tcuStreamSynchronize *cuStreamSynchronize;
     tcuStreamDestroy_v2 *cuStreamDestroy;
@@ -192,6 +199,7 @@ typedef struct CudaFunctions {
     tcuEventRecord *cuEventRecord;
 
     tcuLaunchKernel *cuLaunchKernel;
+    tcuLaunchHostFunc *cuLaunchHostFunc;
     tcuLinkCreate *cuLinkCreate;
     tcuLinkAddData *cuLinkAddData;
     tcuLinkComplete *cuLinkComplete;
@@ -316,6 +324,8 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuDeviceGetName, tcuDeviceGetName, "cuDeviceGetName");
     LOAD_SYMBOL(cuDeviceComputeCapability, tcuDeviceComputeCapability, "cuDeviceComputeCapability");
     LOAD_SYMBOL(cuCtxCreate, tcuCtxCreate_v2, "cuCtxCreate_v2");
+    LOAD_SYMBOL(cuCtxSynchronize, tcuCtxSynchronize, "cuCtxSynchronize");
+    LOAD_SYMBOL(cuCtxGetStreamPriorityRange, tcuCtxGetStreamPriorityRange, "cuCtxGetStreamPriorityRange");
     LOAD_SYMBOL(cuCtxGetCurrent, tcuCtxGetCurrent, "cuCtxGetCurrent");
     LOAD_SYMBOL(cuCtxSetLimit, tcuCtxSetLimit, "cuCtxSetLimit");
     LOAD_SYMBOL(cuCtxPushCurrent, tcuCtxPushCurrent_v2, "cuCtxPushCurrent_v2");
@@ -326,6 +336,10 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuMemAllocManaged, tcuMemAllocManaged, "cuMemAllocManaged");
     LOAD_SYMBOL(cuMemsetD8Async, tcuMemsetD8Async, "cuMemsetD8Async");
     LOAD_SYMBOL(cuMemFree, tcuMemFree_v2, "cuMemFree_v2");
+    LOAD_SYMBOL(cuMemHostAlloc, tcuMemHostAlloc, "cuMemHostAlloc");
+    LOAD_SYMBOL(cuMemFreeHost, tcuMemFreeHost, "cuMemFreeHost");
+    LOAD_SYMBOL(cuMemAllocAsync, tcuMemAllocAsync, "cuMemAllocAsync");
+    LOAD_SYMBOL(cuMemFreeAsync, tcuMemFreeAsync, "cuMemFreeAsync");
     LOAD_SYMBOL(cuMemcpy, tcuMemcpy, "cuMemcpy");
     LOAD_SYMBOL(cuMemcpyAsync, tcuMemcpyAsync, "cuMemcpyAsync");
     LOAD_SYMBOL(cuMemcpy2D, tcuMemcpy2D_v2, "cuMemcpy2D_v2");
@@ -347,6 +361,7 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuDevicePrimaryCtxReset, tcuDevicePrimaryCtxReset, "cuDevicePrimaryCtxReset");
 
     LOAD_SYMBOL(cuStreamCreate, tcuStreamCreate, "cuStreamCreate");
+    LOAD_SYMBOL(cuStreamCreateWithPriority, tcuStreamCreateWithPriority, "cuStreamCreateWithPriority");
     LOAD_SYMBOL(cuStreamQuery, tcuStreamQuery, "cuStreamQuery");
     LOAD_SYMBOL(cuStreamSynchronize, tcuStreamSynchronize, "cuStreamSynchronize");
     LOAD_SYMBOL(cuStreamDestroy, tcuStreamDestroy_v2, "cuStreamDestroy_v2");
@@ -359,6 +374,7 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuEventRecord, tcuEventRecord, "cuEventRecord");
 
     LOAD_SYMBOL(cuLaunchKernel, tcuLaunchKernel, "cuLaunchKernel");
+    LOAD_SYMBOL(cuLaunchHostFunc, tcuLaunchHostFunc, "cuLaunchHostFunc");
     LOAD_SYMBOL(cuLinkCreate, tcuLinkCreate, "cuLinkCreate");
     LOAD_SYMBOL(cuLinkAddData, tcuLinkAddData, "cuLinkAddData");
     LOAD_SYMBOL(cuLinkComplete, tcuLinkComplete, "cuLinkComplete");
