@@ -414,6 +414,7 @@ typedef struct CUeglFrame_st {
 #define CU_TRSF_READ_AS_INTEGER 1
 
 typedef void CUDAAPI CUstreamCallback(CUstream hStream, CUresult status, void *userdata);
+typedef void CUDAAPI CUhostFn(void *userData);
 
 typedef CUresult CUDAAPI tcuInit(unsigned int Flags);
 typedef CUresult CUDAAPI tcuDriverGetVersion(int *driverVersion);
@@ -428,6 +429,8 @@ typedef CUresult CUDAAPI tcuDeviceGetByPCIBusId(CUdevice* dev, const char* pciBu
 typedef CUresult CUDAAPI tcuDeviceGetPCIBusId(char* pciBusId, int len, CUdevice dev);
 typedef CUresult CUDAAPI tcuDeviceComputeCapability(int *major, int *minor, CUdevice dev);
 typedef CUresult CUDAAPI tcuCtxCreate_v2(CUcontext *pctx, unsigned int flags, CUdevice dev);
+typedef CUresult CUDAAPI tcuCtxSynchronize(void);
+typedef CUresult CUDAAPI tcuCtxGetStreamPriorityRange(int *leastPriority, int *greatestPriority);
 typedef CUresult CUDAAPI tcuCtxGetCurrent(CUcontext *pctx);
 typedef CUresult CUDAAPI tcuCtxSetLimit(CUlimit limit, size_t value);
 typedef CUresult CUDAAPI tcuCtxPushCurrent_v2(CUcontext pctx);
@@ -438,6 +441,10 @@ typedef CUresult CUDAAPI tcuMemAllocPitch_v2(CUdeviceptr *dptr, size_t *pPitch, 
 typedef CUresult CUDAAPI tcuMemAllocManaged(CUdeviceptr *dptr, size_t bytesize, unsigned int flags);
 typedef CUresult CUDAAPI tcuMemsetD8Async(CUdeviceptr dstDevice, unsigned char uc, size_t N, CUstream hStream);
 typedef CUresult CUDAAPI tcuMemFree_v2(CUdeviceptr dptr);
+typedef CUresult CUDAAPI tcuMemHostAlloc(void **pp, size_t bytesize, unsigned int flags);
+typedef CUresult CUDAAPI tcuMemFreeHost(void *p);
+typedef CUresult CUDAAPI tcuMemAllocAsync(CUdeviceptr *dptr, size_t bytesize, CUstream hStream);
+typedef CUresult CUDAAPI tcuMemFreeAsync(CUdeviceptr dptr, CUstream hStream);
 typedef CUresult CUDAAPI tcuMemcpy(CUdeviceptr dst, CUdeviceptr src, size_t bytesize);
 typedef CUresult CUDAAPI tcuMemcpyAsync(CUdeviceptr dst, CUdeviceptr src, size_t bytesize, CUstream hStream);
 typedef CUresult CUDAAPI tcuMemcpy2D_v2(const CUDA_MEMCPY2D *pcopy);
@@ -459,6 +466,7 @@ typedef CUresult CUDAAPI tcuDevicePrimaryCtxGetState(CUdevice dev, unsigned int 
 typedef CUresult CUDAAPI tcuDevicePrimaryCtxReset(CUdevice dev);
 
 typedef CUresult CUDAAPI tcuStreamCreate(CUstream *phStream, unsigned int flags);
+typedef CUresult CUDAAPI tcuStreamCreateWithPriority(CUstream *phStream, unsigned int flags, int priority);
 typedef CUresult CUDAAPI tcuStreamQuery(CUstream hStream);
 typedef CUresult CUDAAPI tcuStreamSynchronize(CUstream hStream);
 typedef CUresult CUDAAPI tcuStreamDestroy_v2(CUstream hStream);
@@ -471,6 +479,8 @@ typedef CUresult CUDAAPI tcuEventQuery(CUevent hEvent);
 typedef CUresult CUDAAPI tcuEventRecord(CUevent hEvent, CUstream hStream);
 
 typedef CUresult CUDAAPI tcuLaunchKernel(CUfunction f, unsigned int gridDimX, unsigned int gridDimY, unsigned int gridDimZ, unsigned int blockDimX, unsigned int blockDimY, unsigned int blockDimZ, unsigned int sharedMemBytes, CUstream hStream, void** kernelParams, void** extra);
+typedef CUresult CUDAAPI tcuLaunchHostFunc(CUstream hStream, CUhostFn *fn, void *userData);
+
 typedef CUresult CUDAAPI tcuLinkCreate(unsigned int numOptions, CUjit_option* options, void** optionValues, CUlinkState* stateOut);
 typedef CUresult CUDAAPI tcuLinkAddData(CUlinkState state, CUjitInputType type, void* data, size_t size, const char* name, unsigned int numOptions, CUjit_option* options, void** optionValues);
 typedef CUresult CUDAAPI tcuLinkComplete(CUlinkState state, void** cubinOut, size_t* sizeOut);
