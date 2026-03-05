@@ -240,6 +240,8 @@ typedef struct CudaFunctions {
     tcuArrayCreate *cuArrayCreate;
     tcuArray3DCreate *cuArray3DCreate;
     tcuArrayDestroy *cuArrayDestroy;
+    tcuArray3DGetDescriptor *cuArray3DGetDescriptor;
+    tcuArrayGetPlane *cuArrayGetPlane;
 
     tcuEGLStreamProducerConnect *cuEGLStreamProducerConnect;
     tcuEGLStreamProducerDisconnect *cuEGLStreamProducerDisconnect;
@@ -424,6 +426,8 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuArrayCreate, tcuArrayCreate, "cuArrayCreate_v2");
     LOAD_SYMBOL(cuArray3DCreate, tcuArray3DCreate, "cuArray3DCreate_v2");
     LOAD_SYMBOL(cuArrayDestroy, tcuArrayDestroy, "cuArrayDestroy");
+    LOAD_SYMBOL(cuArray3DGetDescriptor, tcuArray3DGetDescriptor, "cuArray3DGetDescriptor_v2");
+    LOAD_SYMBOL_OPT(cuArrayGetPlane, tcuArrayGetPlane, "cuArrayGetPlane");
 
     LOAD_SYMBOL_OPT(cuEGLStreamProducerConnect, tcuEGLStreamProducerConnect, "cuEGLStreamProducerConnect");
     LOAD_SYMBOL_OPT(cuEGLStreamProducerDisconnect, tcuEGLStreamProducerDisconnect, "cuEGLStreamProducerDisconnect");
