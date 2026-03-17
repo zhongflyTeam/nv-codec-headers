@@ -160,6 +160,11 @@ typedef struct CudaFunctions {
     tcuMemAllocPitch_v2 *cuMemAllocPitch;
     tcuMemAllocManaged *cuMemAllocManaged;
     tcuMemsetD8Async *cuMemsetD8Async;
+    tcuMemsetD16Async *cuMemsetD16Async;
+    tcuMemsetD32Async *cuMemsetD32Async;
+    tcuMemsetD2D8Async *cuMemsetD2D8Async;
+    tcuMemsetD2D16Async *cuMemsetD2D16Async;
+    tcuMemsetD2D32Async *cuMemsetD2D32Async;
     tcuMemFree_v2 *cuMemFree;
     tcuMemHostAlloc *cuMemHostAlloc;
     tcuMemFreeHost *cuMemFreeHost;
@@ -335,6 +340,11 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuMemAllocPitch, tcuMemAllocPitch_v2, "cuMemAllocPitch_v2");
     LOAD_SYMBOL(cuMemAllocManaged, tcuMemAllocManaged, "cuMemAllocManaged");
     LOAD_SYMBOL(cuMemsetD8Async, tcuMemsetD8Async, "cuMemsetD8Async");
+    LOAD_SYMBOL(cuMemsetD16Async, tcuMemsetD16Async, "cuMemsetD16Async");
+    LOAD_SYMBOL(cuMemsetD32Async, tcuMemsetD32Async, "cuMemsetD32Async");
+    LOAD_SYMBOL(cuMemsetD2D8Async, tcuMemsetD2D8Async, "cuMemsetD2D8Async");
+    LOAD_SYMBOL(cuMemsetD2D16Async, tcuMemsetD2D16Async, "cuMemsetD2D16Async");
+    LOAD_SYMBOL(cuMemsetD2D32Async, tcuMemsetD2D32Async, "cuMemsetD2D32Async");
     LOAD_SYMBOL(cuMemFree, tcuMemFree_v2, "cuMemFree_v2");
     LOAD_SYMBOL(cuMemHostAlloc, tcuMemHostAlloc, "cuMemHostAlloc");
     LOAD_SYMBOL(cuMemFreeHost, tcuMemFreeHost, "cuMemFreeHost");
