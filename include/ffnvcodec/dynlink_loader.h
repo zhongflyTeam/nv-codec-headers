@@ -50,7 +50,11 @@
 # define CUDA_LIBNAME "nvcuda.dll"
 # define NVCUVID_LIBNAME "nvcuvid.dll"
 # if defined(_WIN64) || defined(__CYGWIN64__)
-#  define NVENC_LIBNAME "nvEncodeAPI64.dll"
+#  if defined(_M_ARM64) || defined(__aarch64__)
+#   define NVENC_LIBNAME "nvEncodeAPI.dll"
+#  else
+#   define NVENC_LIBNAME "nvEncodeAPI64.dll"
+#  endif
 # else
 #  define NVENC_LIBNAME "nvEncodeAPI.dll"
 # endif
