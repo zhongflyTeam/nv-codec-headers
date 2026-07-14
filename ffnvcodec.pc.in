@@ -3,5 +3,5 @@ includedir=${prefix}/include
 
 Name: ffnvcodec
 Description: FFmpeg version of Nvidia Codec SDK headers
-Version: 11.1.5.4.2
+Version: 11.1.5.5.0
 Cflags: -I${includedir}
